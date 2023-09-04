@@ -1,33 +1,41 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import './Counter.css';
 
-function Counter({ initialValue }) {
-  const [count, setCount] = useState(initialValue);
+class Counter extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      count: this.props.initialValue,
+    };
+  }
 
-  const handleIncrement = () => {
-    setCount(count + 1);
+  handleIncrement = () => {
+    this.setState((prevState) => ({ count: prevState.count + 1 }));
   };
 
-  const handleDecrement = () => {
-    setCount(count - 1);
+  handleDecrement = () => {
+    this.setState((prevState) => ({ count: prevState.count - 1 }));
   };
 
-  const handleReset = () => {
-    setCount(initialValue);
+  handleReset = () => {
+    this.setState({ count: this.props.initialValue });
   };
 
-  return (
-    <div className="counter">
-      <div className="counter-content">
-        <div className="button square" onClick={handleDecrement}>-</div>
-        <div className="count">{count}</div>
-        <div className="button square" onClick={handleIncrement}>+</div>
+  render() {
+    const { count } = this.state;
+    return (
+      <div className="counter">
+        <div className="counter-content">
+          <div className="button square" onClick={this.handleDecrement}>-</div>
+          <div className="count">{count}</div>
+          <div className="button square" onClick={this.handleIncrement}>+</div>
+        </div>
+        <div className="reset-button-container">
+          <button className="reset-button" onClick={this.handleReset}>Reset</button>
+        </div>
       </div>
-      <div className="reset-button-container">
-        <button className="reset-button" onClick={handleReset}>Reset</button>
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default Counter;
